@@ -1,0 +1,15 @@
+#!/bin/bash
+
+# Figure out OS type, Mac or Linux. Strip out version# from Darwin
+export OSTYPE_REAL=${OSTYPE//[0-9.]/}
+
+# assume if on mac then in dev mode, and start redis
+if [[ $OSTYPE_REAL == 'darwin' ]];
+  brew services restart redis
+fi
+
+HUBOT_IRC_SERVER=irc.freenode.net \
+  HUBOT_IRC_ROOMS="#codefellows" \
+  HUBOT_IRC_NICK="codehue" \
+  HUBOT_IRC_UNFLOOD="true" \
+  bin/hubot -a irc --name codehue
